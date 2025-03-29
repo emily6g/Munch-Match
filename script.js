@@ -1,9 +1,17 @@
-const imageNames = [
-    "orange", "strawberry"
-  ];
+const fruits = ["orange", "strawberry", "blackberry"];
+const vegetables = ["broccoli", "carrot", "corn"];
+const protein = ["chicken", "salmon", "steak"];
+const carbs = ["bread", "rice", "potato"];
+
+const categories = {
+  fruits,
+  vegetables,
+  protein,
+  carbs
+};
+
   const tileStacks = [];
   let selected = null;
-  let streak = 0;
   let currentStreak = 0;
   let longestStreak = localStorage.getItem('longestStreak') || 0;
 
@@ -11,14 +19,20 @@ const imageNames = [
 
   
   function getRandomStack() {
-    const stackSize = Math.floor(Math.random() * 2) + 3; // 3–4 images
     const stack = [];
-    for (let i = 0; i < stackSize; i++) {
-      const img = imageNames[Math.floor(Math.random() * imageNames.length)];
-      stack.push(img);
+  
+    // Always pick one random image from each category
+    for (let category in categories) {
+      const images = categories[category];
+      const randomImg = images[Math.floor(Math.random() * images.length)];
+      stack.push(`${category}/${randomImg}`); // e.g., "fruits/orange"
     }
-    return stack;
+  
+    // Optional: Shuffle the stack so order is different
+    return stack.sort(() => Math.random() - 0.5);
   }
+  
+  
   
   function renderBoard() {
     const board = document.getElementById("game-board");
@@ -46,7 +60,6 @@ const imageNames = [
     const stack2 = tileStacks[index];
     if (!stack2.length) return;
   
-    // Clear all highlights
     document.querySelectorAll('.tile').forEach(t => t.classList.remove('selected'));
   
     if (selected === null) {
@@ -57,21 +70,24 @@ const imageNames = [
       const firstTile = document.querySelector(`.tile[data-index="${selected}"]`);
       const secondTile = tile;
   
-      // ✅ Find all matching image IDs
       const matches = stack1.filter(img => stack2.includes(img));
       const uniqueMatches = [...new Set(matches)];
   
       if (uniqueMatches.length > 0) {
-        // Animate top images (optional)
-        const img1 = firstTile.querySelector("img");
-        const img2 = secondTile.querySelector("img");
-        if (img1) img1.classList.add("fade-out");
-        if (img2) img2.classList.add("fade-out");
+        [firstTile, secondTile].forEach((tileEl, tileIdx) => {
+          const stack = tileIdx === 0 ? stack1 : stack2;
+          const imgElements = tileEl.querySelectorAll("img");
+  
+          imgElements.forEach((img, i) => {
+            const imgID = stack[i];
+            if (uniqueMatches.includes(imgID)) {
+              img.classList.add("fade-out");
+            }
+          });
+        });
   
         setTimeout(() => {
-          // 🔄 Remove all matching images from both stacks
           uniqueMatches.forEach(matchID => {
-            // Remove ALL instances of matchID from each stack
             tileStacks[selected] = tileStacks[selected].filter(img => img !== matchID);
             tileStacks[index] = tileStacks[index].filter(img => img !== matchID);
           });
@@ -79,7 +95,6 @@ const imageNames = [
           updateTile(selected);
           updateTile(index);
   
-          // Continue from second tile if it still has images
           if (tileStacks[index].length > 0) {
             secondTile.classList.add("selected");
             selected = index;
@@ -88,18 +103,14 @@ const imageNames = [
           }
         }, 400);
   
-        streak++;
-        updateStreak();
         increaseStreak();
       } else {
-        // ❌ No match
         selected = null;
-        streak = 0;
-        updateStreak();
         resetStreak();
       }
     }
   }
+  
   
   
   
@@ -114,7 +125,7 @@ const imageNames = [
     if (stack.length) {
       stack.forEach((imgID, i) => {
         const img = document.createElement("img");
-        img.src = `images/fruits/${imgID}.png`;
+        img.src = `images/${imgID}.png`;
         img.classList.add("pattern-img");
   
         img.style.zIndex = i + 1;
@@ -148,9 +159,6 @@ const imageNames = [
   }
   
   
-  function updateStreak() {
-    document.getElementById("streak").textContent = streak;
-  }
   
   window.onload = renderBoard;
   
