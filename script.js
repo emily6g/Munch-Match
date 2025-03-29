@@ -1,6 +1,5 @@
 const imageNames = [
-    "blueberry", "blackberry", "mint", "orange",
-    "pie", "raspberry", "strawberry", "vines"
+    "blueberry", "blackberry", "orange", "raspberry", "strawberry"
   ];
   const tileStacks = [];
   let selected = null;
