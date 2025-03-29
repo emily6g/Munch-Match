@@ -27,65 +27,66 @@ const imageNames = [
       const tile = document.createElement("div");
       tile.classList.add("tile");
       tile.dataset.index = i;
-  
-      const img = document.createElement("img");
-      img.src = `images/${stack[stack.length - 1]}.png`;
-      img.classList.add("pattern-img");
-  
-      tile.appendChild(img);
       tile.addEventListener("click", () => handleClick(tile));
       board.appendChild(tile);
+  
+      // 🧠 Render full image stack right away
+      updateTile(i);
     }
   }
   
+  
   function handleClick(tile) {
     const index = parseInt(tile.dataset.index);
-    const stack = tileStacks[index];
-    if (!stack.length) return;
+    const stack2 = tileStacks[index];
+    if (!stack2.length) return;
   
-    // 🔹 Always clear previous highlights
+    // Clear all highlights
     document.querySelectorAll('.tile').forEach(t => t.classList.remove('selected'));
   
     if (selected === null) {
-      // First selection
       selected = index;
       tile.classList.add("selected");
     } else if (selected !== index) {
-      const firstStack = tileStacks[selected];
-      const secondStack = tileStacks[index];
-  
-      const top1 = firstStack[firstStack.length - 1];
-      const top2 = secondStack[secondStack.length - 1];
-  
+      const stack1 = tileStacks[selected];
       const firstTile = document.querySelector(`.tile[data-index="${selected}"]`);
       const secondTile = tile;
   
-      if (top1 === top2) {
-        // ✅ Match found: fade out top images
+      // ✅ Find all matching image IDs
+      const matches = stack1.filter(img => stack2.includes(img));
+      const uniqueMatches = [...new Set(matches)];
+  
+      if (uniqueMatches.length > 0) {
+        // Animate top images (optional)
         const img1 = firstTile.querySelector("img");
         const img2 = secondTile.querySelector("img");
-        img1.classList.add("fade-out");
-        img2.classList.add("fade-out");
+        if (img1) img1.classList.add("fade-out");
+        if (img2) img2.classList.add("fade-out");
   
         setTimeout(() => {
-          firstStack.pop();
-          secondStack.pop();
+          // 🔄 Remove all matching images from both stacks
+          uniqueMatches.forEach(matchID => {
+            // Remove ALL instances of matchID from each stack
+            tileStacks[selected] = tileStacks[selected].filter(img => img !== matchID);
+            tileStacks[index] = tileStacks[index].filter(img => img !== matchID);
+          });
+  
           updateTile(selected);
           updateTile(index);
   
-          // 🔁 Decide if we can continue from second tile
-          if (secondStack.length > 0) {
+          // Continue from second tile if it still has images
+          if (tileStacks[index].length > 0) {
             secondTile.classList.add("selected");
             selected = index;
           } else {
-            selected = null; // no image to continue from
+            selected = null;
           }
         }, 400);
   
         streak++;
         updateStreak();
       } else {
-        // ❌ Not a match: reset
+        // ❌ No match
         selected = null;
         streak = 0;
         updateStreak();
@@ -95,19 +96,29 @@ const imageNames = [
   
   
   
+  
+  
   function updateTile(index) {
     const tile = document.querySelector(`.tile[data-index="${index}"]`);
     tile.classList.remove("selected");
-    tile.innerHTML = "";
+    tile.innerHTML = ""; // Clear existing images
   
     const stack = tileStacks[index];
     if (stack.length) {
-      const img = document.createElement("img");
-      img.src = `images/${stack[stack.length - 1]}.png`;
-      img.classList.add("pattern-img");
-      tile.appendChild(img);
+      stack.forEach((imgID, i) => {
+        const img = document.createElement("img");
+        img.src = `images/${imgID}.png`;
+        img.classList.add("pattern-img");
+  
+        img.style.zIndex = i + 1;
+        img.style.opacity = "0.7"; // ✅ same opacity for all images
+  
+        tile.appendChild(img);
+      });
     }
   }
+  
+  
   
   
   

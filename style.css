@@ -1,7 +1,7 @@
 body {
+    background-color: #f0f0f5;
     font-family: 'Segoe UI', sans-serif;
     text-align: center;
-    background: #f8f9fa;
     margin: 0;
     padding: 20px;
   }
@@ -16,22 +16,31 @@ body {
   }
   
   .tile {
-    background-color: #ffffff;
+    background-color: #ffffff;         /* ✅ white tile background */
     border: 2px solid #ccc;
     border-radius: 8px;
     position: relative;
+    overflow: hidden;                 /* keep images inside */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
   
+  .tile.selected {
+    border-color: #007bff;
+    box-shadow: 0 0 10px #007bff;
+  }
+  
   .pattern-img {
-    width: 40px;
-    height: 40px;
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 40px;
+    height: 40px;
     transform: translate(-50%, -50%);
+    pointer-events: none;
   }
+  
+  
   
   /* Highlight when selected */
 .tile.selected {
@@ -66,7 +75,7 @@ body {
     top: 0; left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('images/pattern1.png');
+    background-image: url('images/pattern2.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
