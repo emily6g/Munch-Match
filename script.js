@@ -4,6 +4,11 @@ const imageNames = [
   const tileStacks = [];
   let selected = null;
   let streak = 0;
+  let currentStreak = 0;
+  let longestStreak = localStorage.getItem('longestStreak') || 0;
+
+  updateStreakDisplay();
+
   
   function getRandomStack() {
     const stackSize = Math.floor(Math.random() * 2) + 3; // 3–4 images
@@ -85,11 +90,13 @@ const imageNames = [
   
         streak++;
         updateStreak();
+        increaseStreak();
       } else {
         // ❌ No match
         selected = null;
         streak = 0;
         updateStreak();
+        resetStreak();
       }
     }
   }
@@ -118,9 +125,27 @@ const imageNames = [
     }
   }
   
+ 
   
   
+  function increaseStreak() {
+    currentStreak++;
+    if (currentStreak > longestStreak) {
+      longestStreak = currentStreak;
+      localStorage.setItem('longestStreak', longestStreak);
+    }
+    updateStreakDisplay();
+  }
   
+  function resetStreak() {
+    currentStreak = 0;
+    updateStreakDisplay();
+  }
+  
+  function updateStreakDisplay() {
+    document.getElementById('current-streak').textContent = `Current Streak: ${currentStreak}`;
+    document.getElementById('longest-streak').textContent = `Longest Streak: ${longestStreak}`;
+  }
   
   
   function updateStreak() {

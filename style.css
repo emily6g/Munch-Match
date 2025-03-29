@@ -63,27 +63,17 @@ body {
   }
 
   body {
-    position: relative;
+    background-image: url('images/background.png'); /* Replace with your image name */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     font-family: 'Segoe UI', sans-serif;
     text-align: center;
     margin: 0;
     padding: 20px;
-    overflow: hidden;
   }
   
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('images/pattern2.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: brightness(0.7) saturate(0.6); /* 👈 adjust these values */
-    z-index: -1;
-  }
   
 
   .tile {
@@ -99,6 +89,59 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
+  
+
+  @font-face {
+    font-family: 'SuperFrog';
+    src: url('SuperFrog.ttf') format('truetype'); /* or .woff */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  h1 {
+    font-family: 'SuperFrog', sans-serif;
+    font-size: 4rem;
+    color: #4CAF50; /* main fill color */
+    text-align: center;
+    margin: 10px 0 5px 0;
+  
+    text-shadow:
+      -1px -1px 0 #fff,
+       1px -1px 0 #fff,
+      -1px  1px 0 #fff,
+       1px  1px 0 #fff; /* creates a white outline effect */
+  }
+  
+  @font-face {
+    font-family: 'LoveDaysLove';
+    src: url('LoveDaysLove.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  
+  #streaks {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    font-size: 1.4rem;
+    font-family: 'LoveDaysLove', cursive;
+    margin-top: 0;
+    padding: 5px 10px;
+    border-radius: 10px;
+  }
+  
+  #streaks p {
+    margin: 0;
+    padding: 0 10px;
+    color:  #4CAF50; /* main fill color */
+    text-shadow:
+      -1px -1px 0 #fff,
+       1px -1px 0 #fff,
+      -1px  1px 0 #fff,
+       1px  1px 0 #fff; /* creates a white outline effect */
+  }
+  
   
   
   
