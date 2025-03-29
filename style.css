@@ -47,7 +47,7 @@ body {
   /* Highlight when selected */
 .tile.selected {
     border: 2px solid #4CAF50;
-    box-shadow: 0 0 10px #4CAF50;
+    box-shadow: 0 0 10px  #4CAF50;
   }
   
   /* Fade out effect */
@@ -103,13 +103,8 @@ body {
     font-size: 4rem;
     color: #4CAF50; /* main fill color */
     text-align: center;
-    margin: 10px 0 5px 0;
-  
-    text-shadow:
-      -1px -1px 0 #fff,
-       1px -1px 0 #fff,
-      -1px  1px 0 #fff,
-       1px  1px 0 #fff; /* creates a white outline effect */
+    margin-bottom: 30px;
+    text-shadow: 2px 2px white;
   }
   
   @font-face {

@@ -34,13 +34,50 @@ const categories = {
   
   
   
+  function generateCategoryPool(categoryArray, totalNeeded) {
+    const pool = [];
+    const countPerImage = totalNeeded / categoryArray.length;
+  
+    if (!Number.isInteger(countPerImage)) {
+      console.error("Image count must divide evenly. Adjust image list.");
+      return [];
+    }
+  
+    categoryArray.forEach(img => {
+      for (let i = 0; i < countPerImage; i++) {
+        pool.push(img);
+      }
+    });
+  
+    return pool.sort(() => Math.random() - 0.5); // Shuffle
+  }
+  
   function renderBoard() {
     const board = document.getElementById("game-board");
     board.innerHTML = "";
     tileStacks.length = 0;
   
-    for (let i = 0; i < 36; i++) {
-      const stack = getRandomStack();
+    const totalTiles = 36;
+    const totalPerCategory = totalTiles; // one per tile
+  
+    // Generate shuffled pools with even count
+    const fruitPool = generateCategoryPool(fruits, totalPerCategory);
+    const vegetablePool = generateCategoryPool(vegetables, totalPerCategory);
+    const proteinPool = generateCategoryPool(protein, totalPerCategory);
+    const carbPool = generateCategoryPool(carbs, totalPerCategory);
+  
+    for (let i = 0; i < totalTiles; i++) {
+      const stack = [];
+  
+      // Pop one from each category
+      stack.push(`fruits/${fruitPool.pop()}`);
+      stack.push(`vegetables/${vegetablePool.pop()}`);
+      stack.push(`protein/${proteinPool.pop()}`);
+      stack.push(`carbs/${carbPool.pop()}`);
+  
+      // Optional: shuffle stack order
+      stack.sort(() => Math.random() - 0.5);
+  
       tileStacks.push(stack);
   
       const tile = document.createElement("div");
@@ -49,10 +86,10 @@ const categories = {
       tile.addEventListener("click", () => handleClick(tile));
       board.appendChild(tile);
   
-      // 🧠 Render full image stack right away
       updateTile(i);
     }
   }
+  
   
   
   function handleClick(tile) {
