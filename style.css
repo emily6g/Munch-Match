@@ -138,6 +138,74 @@ body {
   }
   
   
+  #home-button {
+    position: fixed;
+    font-family: 'LoveDaysLove';
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 16px;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 999;
+    transition: background-color 0.3s ease;
+  }
+  
+  #home-button:hover {
+    background-color: #388E3C;
+  }
+
+  #help-button {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background-color:  #4CAF50;
+    color: white;
+    font-size: 1.2rem;
+    padding: 10px 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  #help-button:hover {
+    background-color: #4CAF50;
+  }
+  
+  #instructions {
+    position: fixed;
+    top: 120px; /* 👈 moved below the help button */
+    right: -300px; /* initially hidden */
+    width: 260px;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #333;
+    padding: 20px;
+    border-radius: 10px 0 0 10px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease;
+    z-index: 999;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: left;
+  }
+  
+  
+  #instructions.show {
+    right: 0; /* slide in */
+  }
+  
+  #instructions h2 {
+    margin-top: 0;
+    color: #4CAF50;
+  }
+  
   
   
   

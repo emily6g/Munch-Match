@@ -7,6 +7,17 @@
 </head>
 <body>
   <h1 class="h1">Munch Match</h1>
+  <a href="home.html" id="home-button">🏠</a>
+
+  <a id="help-button">❓</a>
+  <div id="instructions">
+    <h2>How to Play</h2>
+    <p>Each tile has 4 stacked images: 1 fruit, 1 vegetable, 1 protein, and 1 carb.</p>
+    <p>Click two tiles to try and match the top images.</p>
+    <p>Matched images disappear; keep matching to clear the board!</p>
+    <p>Your goal: clear all the tiles!</p>
+  </div>
+
   <div id="streaks">
     <p id="current-streak">Current Streak: 0</p>
     <p id="longest-streak">Longest Streak: 0</p>
@@ -16,5 +27,12 @@
   <div id="game-board" class="grid-container"></div>
 
   <script src="script.js"></script>
+
+  <script>
+    document.getElementById("help-button").addEventListener("click", () => {
+      document.getElementById("instructions").classList.toggle("show");
+    });
+  </script>
+  
 </body>
 </html>
