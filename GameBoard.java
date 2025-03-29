@@ -35,4 +35,6 @@ public class GameBoard {
         }
         return null;  // Return null if the position is out of bounds
     }
+
+    //add click method to handle click
 }

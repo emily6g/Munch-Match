@@ -42,4 +42,6 @@ public class Tile {
         int index = (int) (Math.random() * images.size());
         return images.get(index).getImagePath();
     }
+
+    //add method to remove an image
 }
