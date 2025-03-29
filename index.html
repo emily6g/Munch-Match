@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pattern Matching Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>LOOM</h1>
+  <div id="game-board" class="grid-container">
+    <!-- Tiles will go here -->
+    <!-- We’ll use placeholder patterns inside -->
+    <!-- Example 36 tiles -->
+    <script>
+      for (let i = 0; i < 36; i++) {
+        document.write(`
+          <div class="tile">
+            <div class="pattern-stack">
+              <div class="pattern-layer layer-1"></div>
+              <div class="pattern-layer layer-2"></div>
+              <div class="pattern-layer layer-3"></div>
+            </div>
+          </div>
+        `);
+      }
+    </script>
+  </div>
+</body>
+</html>
