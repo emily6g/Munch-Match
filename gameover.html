@@ -43,6 +43,13 @@
 </head>
 <body>
   <h1>🎉 You Won! 🎉</h1>
-  <button onclick="window.location.href='index.html'">Play Again</button>
+  <button onclick="restartGame()">Play Again</button>
+  <script>
+    function restartGame() {
+      localStorage.removeItem('longestStreak');
+      window.location.href = "index.html";
+    }
+  </script>
+  
 </body>
 </html>

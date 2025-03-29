@@ -7,7 +7,7 @@
 </head>
 <body>
   <h1 class="h1">Munch Match</h1>
-  <a href="home.html" id="home-button">🏠</a>
+  <a href="home.html" id="home-button" onclick="resetLongestStreak()">🏠</a>
 
   <a id="help-button">❓</a>
   <div id="instructions">
@@ -33,6 +33,13 @@
       document.getElementById("instructions").classList.toggle("show");
     });
   </script>
+
+  <script>
+    function resetLongestStreak() {
+      localStorage.removeItem('longestStreak');
+    }
+  </script>
+
   
 </body>
 </html>
