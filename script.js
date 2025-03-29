@@ -115,12 +115,13 @@ const categories = {
           const stack = tileIdx === 0 ? stack1 : stack2;
           const imgElements = tileEl.querySelectorAll("img");
   
-          imgElements.forEach((img, i) => {
-            const imgID = stack[i];
-            if (uniqueMatches.includes(imgID)) {
+          imgElements.forEach(img => {
+            const src = img.src.split("/").slice(-2).join("/").replace(".png", "");
+            if (uniqueMatches.includes(src)) {
               img.classList.add("fade-out");
             }
           });
+          
         });
   
         setTimeout(() => {
@@ -128,22 +129,26 @@ const categories = {
             tileStacks[selected] = tileStacks[selected].filter(img => img !== matchID);
             tileStacks[index] = tileStacks[index].filter(img => img !== matchID);
           });
-  
+        
           updateTile(selected);
           updateTile(index);
-
+        
           const allEmpty = tileStacks.every(stack => stack.length === 0);
           if (allEmpty) {
-            window.location.href = "gameover.html"; // 👈 navigate to game over screen
+            window.location.href = "gameover.html";
           }
-
+        
           if (tileStacks[index].length > 0) {
             secondTile.classList.add("selected");
             selected = index;
           } else {
             selected = null;
+        
+            // ✅ Only show message if the second tile is now empty
+            showGoAnywhereMessage(secondTile);
           }
         }, 400);
+        
   
         increaseStreak();
       } else {
@@ -151,6 +156,34 @@ const categories = {
         resetStreak();
       }
     }
+  }
+  
+  function showGoAnywhereMessage(tileElement) {
+    const rect = tileElement.getBoundingClientRect();
+  
+    const message = document.createElement("div");
+    message.textContent = "Go anywhere!";
+    message.style.position = "fixed";
+    message.style.top = `${rect.top + window.scrollY}px`;
+    message.style.left = `${rect.left + rect.width / 2}px`;
+    message.style.transform = "translate(-50%, -120%)"; // position above the tile
+    message.style.backgroundColor = "#4CAF50";
+    message.style.color = "white";
+    message.style.padding = "10px 16px";
+    message.style.borderRadius = "10px";
+    message.style.fontFamily = "'Segoe UI', sans-serif";
+    message.style.fontSize = "1rem";
+    message.style.boxShadow = "0 2px 6px rgba(0,0,0,0.3)";
+    message.style.zIndex = 1000;
+    message.style.opacity = 1;
+    message.style.transition = "opacity 0.4s ease";
+  
+    document.body.appendChild(message);
+  
+    setTimeout(() => {
+      message.style.opacity = 0;
+      setTimeout(() => message.remove(), 400);
+    }, 1500);
   }
   
   
