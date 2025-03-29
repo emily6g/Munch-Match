@@ -1,5 +1,5 @@
 const imageNames = [
-    "blueberry", "blackberry", "orange", "raspberry", "strawberry"
+    "orange", "strawberry"
   ];
   const tileStacks = [];
   let selected = null;
@@ -107,7 +107,7 @@ const imageNames = [
     if (stack.length) {
       stack.forEach((imgID, i) => {
         const img = document.createElement("img");
-        img.src = `images/${imgID}.png`;
+        img.src = `images/fruits/${imgID}.png`;
         img.classList.add("pattern-img");
   
         img.style.zIndex = i + 1;
