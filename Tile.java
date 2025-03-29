@@ -4,7 +4,7 @@ public class Tile {
     private List<Image> images;  // List of images associated with the tile
     private String color;        // Tile color
 
-
+    //
     public Tile(List<Image> images, String color) 
     {
         this.images = images;
