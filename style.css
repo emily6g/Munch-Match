@@ -33,3 +33,21 @@ body {
     transform: translate(-50%, -50%);
   }
   
+  /* Highlight when selected */
+.tile.selected {
+    border: 2px solid #007bff;
+    box-shadow: 0 0 10px #007bff;
+  }
+  
+  /* Fade out effect */
+  .pattern-img.fade-out {
+    animation: fadeOut 0.4s ease-out forwards;
+  }
+  
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+  }
+  

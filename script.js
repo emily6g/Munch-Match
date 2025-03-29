@@ -42,29 +42,51 @@ const imageNames = [
   function handleClick(tile) {
     const index = parseInt(tile.dataset.index);
     const stack = tileStacks[index];
-  
     if (!stack.length) return;
   
+    // 🔹 Always clear previous highlights
+    document.querySelectorAll('.tile').forEach(t => t.classList.remove('selected'));
+  
     if (selected === null) {
+      // First selection
       selected = index;
       tile.classList.add("selected");
     } else if (selected !== index) {
-      const first = tileStacks[selected];
-      const second = tileStacks[index];
+      const firstStack = tileStacks[selected];
+      const secondStack = tileStacks[index];
   
-      const top1 = first[first.length - 1];
-      const top2 = second[second.length - 1];
+      const top1 = firstStack[firstStack.length - 1];
+      const top2 = secondStack[secondStack.length - 1];
+  
+      const firstTile = document.querySelector(`.tile[data-index="${selected}"]`);
+      const secondTile = tile;
   
       if (top1 === top2) {
-        first.pop();
-        second.pop();
+        // ✅ Match found: fade out top images
+        const img1 = firstTile.querySelector("img");
+        const img2 = secondTile.querySelector("img");
+        img1.classList.add("fade-out");
+        img2.classList.add("fade-out");
+  
+        setTimeout(() => {
+          firstStack.pop();
+          secondStack.pop();
+          updateTile(selected);
+          updateTile(index);
+  
+          // 🔁 Decide if we can continue from second tile
+          if (secondStack.length > 0) {
+            secondTile.classList.add("selected");
+            selected = index;
+          } else {
+            selected = null; // no image to continue from
+          }
+        }, 400);
+  
         streak++;
-        updateTile(selected);
-        updateTile(index);
         updateStreak();
-        selected = index;
       } else {
-        document.querySelector(`.tile[data-index="${selected}"]`).classList.remove("selected");
+        // ❌ Not a match: reset
         selected = null;
         streak = 0;
         updateStreak();
@@ -72,9 +94,13 @@ const imageNames = [
     }
   }
   
+  
+  
   function updateTile(index) {
     const tile = document.querySelector(`.tile[data-index="${index}"]`);
+    tile.classList.remove("selected");
     tile.innerHTML = "";
+  
     const stack = tileStacks[index];
     if (stack.length) {
       const img = document.createElement("img");
@@ -83,6 +109,9 @@ const imageNames = [
       tile.appendChild(img);
     }
   }
+  
+  
+  
   
   function updateStreak() {
     document.getElementById("streak").textContent = streak;
