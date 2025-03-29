@@ -50,4 +50,30 @@ body {
       transform: scale(0.8);
     }
   }
+
+  body {
+    position: relative;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    overflow: hidden;
+  }
+  
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('images/pattern1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.7) saturate(0.6); /* 👈 adjust these values */
+    z-index: -1;
+  }
+  
+  
+  
   
