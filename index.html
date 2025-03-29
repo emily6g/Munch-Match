@@ -9,22 +9,28 @@
 <body>
   <h1>LOOM</h1>
   <div id="game-board" class="grid-container">
-    <!-- Tiles will go here -->
-    <!-- We’ll use placeholder patterns inside -->
-    <!-- Example 36 tiles -->
     <script>
-      for (let i = 0; i < 36; i++) {
-        document.write(`
-          <div class="tile">
-            <div class="pattern-stack">
-              <div class="pattern-layer layer-1"></div>
-              <div class="pattern-layer layer-2"></div>
-              <div class="pattern-layer layer-3"></div>
-            </div>
-          </div>
-        `);
-      }
-    </script>
+        fetch("http://localhost:8080/api/getBoard")
+          .then(res => res.json())
+          .then(data => {
+            const board = data.board; // 2D array of tiles
+            const container = document.getElementById("game-board");
+            container.innerHTML = ""; // Clear placeholder
+      
+            board.flat().forEach((tile, i) => {
+              const imgPath = tile.images[tile.images.length - 1].imagePath; // top pattern
+              container.innerHTML += `
+                <div class="tile" data-index="${i}">
+                  <div class="pattern-stack">
+                    <img src="${imgPath}" class="pattern-img" />
+                  </div>
+                </div>
+              `;
+            });
+          });
+      </script>
+      
   </div>
+  
 </body>
 </html>
