@@ -1,80 +1,92 @@
-// Fetch the board and render the tiles with image patterns
-fetch("http://localhost:8080/api/getBoard")
-  .then(res => res.json())
-  .then(data => {
-    const board = data.board; // 2D array from backend
-    const container = document.getElementById("game-board");
-    container.innerHTML = ""; // Clear previous tiles
-
-    board.flat().forEach((tile, i) => {
-      const topImage = tile.images[tile.images.length - 1]; // Top of stack
-      container.innerHTML += `
-        <div class="tile" data-index="${i}">
-          <div class="pattern-stack">
-            <img src="${topImage.imagePath}" class="pattern-img" />
-          </div>
-        </div>
-      `;
-    });
-
-    setupEventListeners(); // Add click logic after render
-  });
-
-
-// Your tile matching logic with event listeners
-function setupEventListeners() {
-  const tiles = document.querySelectorAll(".tile");
-  let lastSelected = null;
+const imageNames = [
+    "blueberry", "blackberry", "mint", "orange",
+    "pie", "raspberry", "strawberry", "vines"
+  ];
+  const tileStacks = [];
+  let selected = null;
   let streak = 0;
-
-  tiles.forEach(tile => {
-    tile.addEventListener("click", () => {
-      const index = tile.dataset.index;
-
-      if (lastSelected === null) {
-        lastSelected = index;
-        tile.classList.add("selected");
-      } else {
-        const first = document.querySelector(`.tile[data-index="${lastSelected}"]`);
-        const second = tile;
-
-        checkMatch(lastSelected, index).then(match => {
-          if (match) {
-            first.classList.remove("selected");
-            first.classList.add("matched");
-            second.classList.add("matched");
-            streak++;
-            lastSelected = index; // Continue from this one
-          } else {
-            alert("No match!");
-            first.classList.remove("selected");
-            streak = 0;
-            lastSelected = null;
-          }
-        });
-      }
-    });
-  });
-}
-
-
-async function checkMatch(index1, index2) {
-    const res = await fetch("http://localhost:8080/api/checkMatch", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tile1: parseInt(index1), tile2: parseInt(index2) })
-    });
   
-    const result = await res.json();
-  
-    if (result.match) {
-      const firstImg = document.querySelector(`.tile[data-index="${index1}"] img`);
-      const secondImg = document.querySelector(`.tile[data-index="${index2}"] img`);
-  
-      if (firstImg) firstImg.src = result.newImage1 || "";
-      if (secondImg) secondImg.src = result.newImage2 || "";
+  function getRandomStack() {
+    const stackSize = Math.floor(Math.random() * 2) + 3; // 3–4 images
+    const stack = [];
+    for (let i = 0; i < stackSize; i++) {
+      const img = imageNames[Math.floor(Math.random() * imageNames.length)];
+      stack.push(img);
     }
-  
-    return result.match;
+    return stack;
   }
+  
+  function renderBoard() {
+    const board = document.getElementById("game-board");
+    board.innerHTML = "";
+    tileStacks.length = 0;
+  
+    for (let i = 0; i < 36; i++) {
+      const stack = getRandomStack();
+      tileStacks.push(stack);
+  
+      const tile = document.createElement("div");
+      tile.classList.add("tile");
+      tile.dataset.index = i;
+  
+      const img = document.createElement("img");
+      img.src = `images/${stack[stack.length - 1]}.png`;
+      img.classList.add("pattern-img");
+  
+      tile.appendChild(img);
+      tile.addEventListener("click", () => handleClick(tile));
+      board.appendChild(tile);
+    }
+  }
+  
+  function handleClick(tile) {
+    const index = parseInt(tile.dataset.index);
+    const stack = tileStacks[index];
+  
+    if (!stack.length) return;
+  
+    if (selected === null) {
+      selected = index;
+      tile.classList.add("selected");
+    } else if (selected !== index) {
+      const first = tileStacks[selected];
+      const second = tileStacks[index];
+  
+      const top1 = first[first.length - 1];
+      const top2 = second[second.length - 1];
+  
+      if (top1 === top2) {
+        first.pop();
+        second.pop();
+        streak++;
+        updateTile(selected);
+        updateTile(index);
+        updateStreak();
+        selected = index;
+      } else {
+        document.querySelector(`.tile[data-index="${selected}"]`).classList.remove("selected");
+        selected = null;
+        streak = 0;
+        updateStreak();
+      }
+    }
+  }
+  
+  function updateTile(index) {
+    const tile = document.querySelector(`.tile[data-index="${index}"]`);
+    tile.innerHTML = "";
+    const stack = tileStacks[index];
+    if (stack.length) {
+      const img = document.createElement("img");
+      img.src = `images/${stack[stack.length - 1]}.png`;
+      img.classList.add("pattern-img");
+      tile.appendChild(img);
+    }
+  }
+  
+  function updateStreak() {
+    document.getElementById("streak").textContent = streak;
+  }
+  
+  window.onload = renderBoard;
   

@@ -2,35 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pattern Matching Game</title>
+  <title>LOOM</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>LOOM</h1>
-  <div id="game-board" class="grid-container">
-    <script>
-        fetch("http://localhost:8080/api/getBoard")
-          .then(res => res.json())
-          .then(data => {
-            const board = data.board; // 2D array of tiles
-            const container = document.getElementById("game-board");
-            container.innerHTML = ""; // Clear placeholder
-      
-            board.flat().forEach((tile, i) => {
-              const imgPath = tile.images[tile.images.length - 1].imagePath; // top pattern
-              container.innerHTML += `
-                <div class="tile" data-index="${i}">
-                  <div class="pattern-stack">
-                    <img src="${imgPath}" class="pattern-img" />
-                  </div>
-                </div>
-              `;
-            });
-          });
-      </script>
-      
-  </div>
-  
+  <p>Streak: <span id="streak">0</span></p>
+  <div id="game-board" class="grid-container"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
