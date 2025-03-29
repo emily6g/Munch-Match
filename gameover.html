@@ -1,0 +1,47 @@
+<!-- gameover.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>You Won!</title>
+  <link rel="stylesheet" href="style.css"> <!-- reuse your CSS if you want -->
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: 'SuperFrog', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    button {
+      font-size: 1.5rem;
+      padding: 12px 24px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #388E3C;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 You Won! 🎉</h1>
+  <button onclick="window.location.href='index.html'">Play Again</button>
+</body>
+</html>

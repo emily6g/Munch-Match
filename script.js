@@ -94,7 +94,12 @@ const categories = {
   
           updateTile(selected);
           updateTile(index);
-  
+
+          const allEmpty = tileStacks.every(stack => stack.length === 0);
+          if (allEmpty) {
+            window.location.href = "gameover.html"; // 👈 navigate to game over screen
+          }
+
           if (tileStacks[index].length > 0) {
             secondTile.classList.add("selected");
             selected = index;
@@ -129,7 +134,7 @@ const categories = {
         img.classList.add("pattern-img");
   
         img.style.zIndex = i + 1;
-        img.style.opacity = "0.7"; // ✅ same opacity for all images
+        img.style.opacity = "1"; // ✅ same opacity for all images
   
         tile.appendChild(img);
       });
