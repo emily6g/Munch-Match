@@ -1,44 +1,73 @@
+<!-- home.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>LOOM</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Mutch Match</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: url('images/background.png') center/cover no-repeat fixed;
+      font-family: 'SuperFrog', sans-serif;
+      color: #fff;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 40px;
+      color: #4CAF50;
+      text-shadow: 2px 2px white;
+    }
+
+    .btn {
+      display: inline-block;
+      font-family: 'LoveDaysLove', sans-serif;
+      font-size: 1.5rem;
+      padding: 15px 30px;
+      margin: 15px;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #388E3C;
+    }
+
+    #rules {
+      max-width: 600px;
+      font-family: 'LoveDaysLove', sans-serif;
+      margin: 40px auto;
+      background:#4CAF50;
+      padding: 20px;
+      border-radius: 12px;
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <h1 class="h1">Munch Match</h1>
-  <a href="home.html" id="home-button" onclick="resetLongestStreak()">🏠</a>
+  <h1>Munch Match</h1>
 
-  <a id="help-button">❓</a>
-  <div id="instructions">
+  <button class="btn" onclick="window.location.href='game.html'">Play Game</button>
+  <button class="btn" onclick="toggleRules()">Rules</button>
+
+  <div id="rules">
     <h2>How to Play</h2>
     <p>Match the same foods from each tile.</p>
     <p>Each tile has a stack of four food types: fruit, vegetable, protein, and carb.</p>
     <p>Keep matching to build your streak. Game ends when all tiles are empty!</p>
   </div>
 
-  <div id="streaks">
-    <p id="current-streak">Current Streak: 0</p>
-    <p id="longest-streak">Longest Streak: 0</p>
-  </div>
-  
-  
-  <div id="game-board" class="grid-container"></div>
-
-  <script src="script.js"></script>
-
   <script>
-    document.getElementById("help-button").addEventListener("click", () => {
-      document.getElementById("instructions").classList.toggle("show");
-    });
-  </script>
-
-  <script>
-    function resetLongestStreak() {
-      localStorage.removeItem('longestStreak');
+    function toggleRules() {
+      const rules = document.getElementById('rules');
+      rules.style.display = (rules.style.display === 'none' || rules.style.display === '') ? 'block' : 'none';
     }
   </script>
-
-  
 </body>
 </html>

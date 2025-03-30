@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LOOM</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1 class="h1">Munch Match</h1>
+  <a href="index.html" id="home-button" onclick="resetLongestStreak()">🏠</a>
+
+  <a id="help-button">❓</a>
+  <div id="instructions">
+    <h2>How to Play</h2>
+    <p>Match the same foods from each tile.</p>
+    <p>Each tile has a stack of four food types: fruit, vegetable, protein, and carb.</p>
+    <p>Keep matching to build your streak. Game ends when all tiles are empty!</p>
+  </div>
+
+  <div id="streaks">
+    <p id="current-streak">Current Streak: 0</p>
+    <p id="longest-streak">Longest Streak: 0</p>
+  </div>
+  
+  
+  <div id="game-board" class="grid-container"></div>
+
+  <script src="script.js"></script>
+
+  <script>
+    document.getElementById("help-button").addEventListener("click", () => {
+      document.getElementById("instructions").classList.toggle("show");
+    });
+  </script>
+
+  <script>
+    function resetLongestStreak() {
+      localStorage.removeItem('longestStreak');
+    }
+  </script>
+
+  
+</body>
+</html>

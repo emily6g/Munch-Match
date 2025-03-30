@@ -235,7 +235,7 @@ const categories = {
   
   function restartGame() {
     localStorage.removeItem('longestStreak'); // reset saved streak
-    window.location.href = "index.html";      // start a new game
+    window.location.href = "game.html";      // start a new game
   }
   
   
