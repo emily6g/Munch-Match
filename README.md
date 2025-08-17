@@ -1,4 +1,4 @@
-# Loom
+# Munch Match
 Inspiration
 
 We wanted to create a game that not only entertained but also encouraged players to think about balanced eating in a fun and engaging way. Many food-related games focus on fast food or unrealistic eating habits, so we set out to design Munch Match—a pattern-matching game where players match identical foods, each tile featuring a mix of food groups to reinforce healthy eating habits. Our goal was to make nutrition awareness accessible and fun for all ages while blending education with enjoyable gameplay.
